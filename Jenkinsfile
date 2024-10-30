@@ -33,7 +33,7 @@ pipeline {
         stage('Build app image') {
             steps {
                 script {
-                  applicationImage = docker.build("${imageName}:${env.BUUILD_ID}")
+                  applicationImage = docker.build("${imageName}:${env.BUILD_ID}")
                 }
             }
         }
