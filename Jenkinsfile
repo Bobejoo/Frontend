@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Get Frontend') {
             steps {
-                git branch: 'main', credentialsId: 'jenkins_agent', url: 'https://github.com/Bobejoo/Frontend'
+                checkout scm
             }
         }
     
