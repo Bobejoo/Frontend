@@ -1,6 +1,7 @@
 def imageName="bobejoo/frontend"
 def dockerRegistry=""
 def registryCredentials="dockerhub"
+def dockerTag=""
 
 pipeline {
     agent {
@@ -52,6 +53,9 @@ pipeline {
         always {
             junit testResults: "test-results/*.xml"
             cleanWs()
+        }
+        success {
+            build job: 'app_of_apps', parameters: [ string(name: 'frontendDockerTag', value: "$dockerTag")], wait: false
         }
     }
 }
