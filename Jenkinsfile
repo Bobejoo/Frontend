@@ -7,10 +7,13 @@ pipeline {
     agent {
         label 'agent'
     }
+
     environment {
         PIP_BREAK_SYSTEM_PACKAGES = 1
         scannerHome = tool 'SonarQube'
+									 
     }
+
     stages {
         stage('Get Frontend') {
             steps {
@@ -24,6 +27,7 @@ pipeline {
                       python3 -m pytest --cov=. --cov-report xml:test-results/coverage.xml --junitxml=test-results/pytest-report.xml"""
             }
         }
+
         stage('Sonar snooping') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -31,13 +35,18 @@ pipeline {
                 }
             }
         }
+
         stage('Build app image') {
             steps {
                 script {
-                  applicationImage = docker.build("${imageName}:${env.BUILD_ID}")
+                  dockerTag = "RC-${env.BUILD_ID}"
+				  applicationImage = docker.build("$imageName:$dockerTag",".")
+																			
+																			  
                 }
             }
         }
+
         stage ('Push image to repo') {
             steps {
                 script {
