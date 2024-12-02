@@ -82,4 +82,4 @@ pipeline {
             build job: 'app_of_apps', parameters: [ string(name: 'frontendDockerTag', value: "$dockerTag")], wait: false
         }
     }
-}
+
